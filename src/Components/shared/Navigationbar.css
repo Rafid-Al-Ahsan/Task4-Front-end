@@ -1,0 +1,10 @@
+ Nav a{
+   margin: 0 10px;
+   text-decoration: none;
+   color: black;
+} 
+.active{
+   font-weight: 700;
+   text-decoration: underline;
+}
+
