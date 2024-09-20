@@ -88,7 +88,7 @@ const UserManagement = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map(user => (
+          {users.map((user, index) => (
             <tr key={user._id}>
               <td>
                 <input 
@@ -97,7 +97,7 @@ const UserManagement = () => {
                   onChange={() => handleCheckboxChange(user._id)} 
                 />
               </td>
-              <td>{user._id}</td>
+              <td>{index + 1}</td> {/* Use index + 1 as serial number */}
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.lastlogin}</td>
