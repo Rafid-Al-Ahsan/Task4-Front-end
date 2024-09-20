@@ -5,12 +5,12 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth, signOut, updateProfile } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
+
 const Registration = () => {
 
     const auth = getAuth(app);
-
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
 
     const handleRegister = (event) => {
         event.preventDefault();
@@ -28,7 +28,7 @@ const Registration = () => {
                 updateProfile(createdUser, { photoURL: photo, displayName: name })
                     .then(() => {
                         console.log('User profile updated successfully.');
-                        const saveUser = { name: createdUser.displayName, email: createdUser.email,  img: createdUser.photoURL, time: createdUser.metadata.creationTime, lastlogin: "----"};
+                        const saveUser = { name: createdUser.displayName, email: createdUser.email,  img: createdUser.photoURL, time: createdUser.metadata.creationTime, lastlogin: "----", status: 'Not-blocked'};
                         fetch('http://localhost:5000/users', {
                             method: 'POST',
                             headers: {
@@ -41,18 +41,38 @@ const Registration = () => {
                     })
                     .catch((updateError) => {
                         console.error('Error updating user profile:', updateError);
+                      
                     });
 
                 signOut(auth);
                 // console.log(createdUser);
-                setSuccess("User created successful! Please go to the login page and login");
-                setError("");
+
+                toast.success('User created successful! Please go to the login page and login', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
 
                 
                 event.target.reset();
             })
             .catch(error => {
-                setError(error.message);
+                // setError(error.message);
+                toast.error(error.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             })
 
     }
@@ -87,7 +107,9 @@ const Registration = () => {
                     Register
                 </Button>
 
-                <br />
+                <ToastContainer />
+
+                {/* <br />
                 <Form.Text className="text-success">
                     {success}
                 </Form.Text>
@@ -97,6 +119,8 @@ const Registration = () => {
                 <Form.Text className="text-danger">
                     {error}
                 </Form.Text>
+                <br /> */}
+
                 <br />
 
                 <Form.Text className="text-secondary">
@@ -105,6 +129,8 @@ const Registration = () => {
 
 
             </Form>
+
+            
         </Container>
     );
 };

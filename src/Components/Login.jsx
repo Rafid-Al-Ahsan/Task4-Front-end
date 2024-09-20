@@ -1,19 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from '../firebase/firebase.config';
 
 import { format } from 'date-fns';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
+
 
 
 const auth = getAuth(app);
 
 const Login = () => {
 
-    const [error, setError] = useState();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
@@ -23,7 +24,7 @@ const Login = () => {
         const form = event.target;
         const email = form.emailfield.value;
         const password = form.passwordfield.value;
-        
+
 
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
@@ -53,7 +54,17 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .catch(error => {
-                setError(error.message);
+                toast.error('Incorrect username or password', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                console.error(error.message)
             });
 
     }
@@ -84,9 +95,7 @@ const Login = () => {
                         Don't have an account? <Link to="/registration">Register</Link><br />
                     </Form.Text>
 
-                    <Form.Text className="text-danger">
-                        {error}
-                    </Form.Text>
+                    <ToastContainer />
 
                 </Col>
             </Row>

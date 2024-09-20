@@ -60,7 +60,7 @@ const UserManagement = () => {
 
   return (
     <div>
-      <h2>User Management</h2>
+      <h2 style={{textAlign: 'center'}}>User Management</h2>
 
       {/* Toolbar with action buttons */}
       <div className="mb-3">
@@ -102,7 +102,7 @@ const UserManagement = () => {
               <td>{user.email}</td>
               <td>{user.lastlogin}</td>
               <td>{user.time}</td>
-              <td>{user.status === 'active' ? 'Active' : 'Blocked'}</td>
+              <td>{user.status}</td>
             </tr>
           ))}
         </tbody>
