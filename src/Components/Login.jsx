@@ -23,7 +23,7 @@ const Login = () => {
         const password = form.passwordfield.value;
     
         // Fetch user data from the server using email
-        fetch(`http://localhost:5000/users/${email}`)
+        fetch(`https://task4-pink.vercel.app/users/${email}`)
             .then(response => response.json())
             .then(data => {
                 // Check if the user's status is blocked
@@ -54,7 +54,7 @@ const Login = () => {
                         const saveUser = { lastlogin: formattedDate };
     
                         // Make the PUT request to update the last login time in MongoDB
-                        fetch(`http://localhost:5000/users/${loggedUser.email}`, {
+                        fetch(`https://task4-pink.vercel.app/users/${loggedUser.email}`, {
                             method: 'PUT',
                             headers: {
                                 'content-type': 'application/json',

@@ -21,7 +21,7 @@ const UserManagement = () => {
 
   // Fetch data when the component mounts
   useEffect(() => {
-    fetch('http://localhost:5000/users')
+    fetch('https://task4-pink.vercel.app/users')
       .then(response => response.json())
       .then(data => {
         setUsers(data);
@@ -64,7 +64,7 @@ const UserManagement = () => {
 
     // Make a PUT request to update the status of each selected user to 'blocked'
     usersToBlock.forEach(user => {
-      fetch(`http://localhost:5000/users/block/${user.email}`, {
+      fetch(`https://task4-pink.vercel.app/users/block/${user.email}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ const UserManagement = () => {
     const usersToUnblock = users.filter(user => selectedUsers.includes(user.email));
 
     usersToUnblock.forEach(user => {
-      fetch(`http://localhost:5000/users/unblock/${user.email}`, {
+      fetch(`https://task4-pink.vercel.app/users/unblock/${user.email}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ const UserManagement = () => {
 
     // Make a DELETE request to remove each selected user by email
     usersToDelete.forEach(user => {
-      fetch(`http://localhost:5000/users/${user.email}`, {
+      fetch(`https://task4-pink.vercel.app/users/${user.email}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

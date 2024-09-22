@@ -29,7 +29,7 @@ const Registration = () => {
                     .then(() => {
                         console.log('User profile updated successfully.');
                         const saveUser = { name: createdUser.displayName, email: createdUser.email,  img: createdUser.photoURL, time: createdUser.metadata.creationTime, lastlogin: "----", status: 'Not-blocked'};
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://task4-pink.vercel.app/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
