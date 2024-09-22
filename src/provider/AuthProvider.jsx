@@ -7,7 +7,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({children}) => {
 
     const auth = getAuth(app);
-    const [user, setUser] = useState(null);
+    const [firebaseUser, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const AuthProvider = ({children}) => {
     },)
 
     const authInfo = {
-        user,
+        firebaseUser,
         loading
     }
 

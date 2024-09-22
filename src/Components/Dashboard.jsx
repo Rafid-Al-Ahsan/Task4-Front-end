@@ -4,13 +4,13 @@ import { Container } from "react-bootstrap";
 
 const Home = () => {
 
-    const { user } = useContext(AuthContext);
-    console.log(user)
+    const { firebaseUser } = useContext(AuthContext);
+    console.log(firebaseUser)
 
     return (
         <div>
             <Container>
-                <h2>Welcome to Dashboard, {user?.displayName}</h2>
+                <h2>Welcome to Dashboard, {firebaseUser?.displayName}</h2>
             </Container>
         </div>
     );

@@ -11,7 +11,7 @@ import Nav from 'react-bootstrap/Nav';
 import '../shared/Navigationbar.css';
 
 const Navigationbar = () => {
-    const { user } = useContext(AuthContext);
+    const { firebaseUser } = useContext(AuthContext);
     const auth = getAuth(app);
     const location = useLocation(); // Get current location
 
@@ -32,22 +32,22 @@ const Navigationbar = () => {
                         <Navbar.Toggle />
                         <Navbar.Collapse className="justify-content-end">
                             <Nav className="mx-auto">
-                                {user && <Link to="/usermanagement" className="text-white">User Management</Link>}
+                                {firebaseUser && <Link to="/usermanagement" className="text-white">User Management</Link>}
                             </Nav>
                             <div>
-                                {user && (
+                                {firebaseUser && (
                                     <Image
-                                        src={user?.photoURL}
+                                        src={firebaseUser?.photoURL}
                                         alt="Profile Photo"
                                         roundedCircle
                                         fluid
                                         style={{ width: "3rem", height: "3rem" }}
-                                        title={user?.displayName}
+                                        title={firebaseUser?.displayName}
                                     />
                                 )}
                             </div>
                             <Navbar.Text className="mx-3">
-                                {user ? (
+                                {firebaseUser ? (
                                     <Button onClick={handleLogOut} variant="secondary bg-success">Logout</Button>
                                 ) : (
                                     // Conditionally render either 'Login' or 'Sign Up' button
