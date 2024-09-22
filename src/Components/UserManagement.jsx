@@ -80,6 +80,11 @@ const UserManagement = () => {
           );
           // Clear the selected users list
           setSelectedUsers(prevSelected => prevSelected.filter(email => email !== user.email));
+
+            // Check if the blocked user is the current user
+            if (user.email === firebaseUser.email) { // Replace `currentUserEmail` with the actual email of the logged-in user
+              handleLogOut(); // Call the logout function
+            }
         })
         .catch(error => {
           console.error(`Error blocking user ${user.name}:`, error);
