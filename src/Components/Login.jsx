@@ -6,7 +6,7 @@ import app from '../firebase/firebase.config';
 import { format } from 'date-fns';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState, useEffect } from 'react';
+
 
 const auth = getAuth(app);
 
@@ -15,10 +15,6 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
 
-    const [users, setUsers] = useState([]);
-
-    // Use useEffect to log the users when it updates
-    
 
     const handleLogin = event => {
         event.preventDefault();
