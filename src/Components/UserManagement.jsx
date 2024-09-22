@@ -57,6 +57,62 @@ const UserManagement = () => {
     setSelectAll(!selectAll);
   };
 
+   // Function to block selected users by email
+   const handleBlock = () => {
+    // Filter out users that are not selected
+    const usersToBlock = users.filter(user => selectedUsers.includes(user.email));
+
+    // Make a PUT request to update the status of each selected user to 'blocked'
+    usersToBlock.forEach(user => {
+      fetch(`http://localhost:5000/users/block/${user.email}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: 'blocked' })  // Update status to blocked
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(`User ${user.name} blocked successfully.`);
+          // Update the UI by setting the status of the blocked user to 'blocked'
+          setUsers(prevUsers => 
+            prevUsers.map(u => u.email === user.email ? { ...u, status: 'blocked' } : u)
+          );
+          // Clear the selected users list
+          setSelectedUsers(prevSelected => prevSelected.filter(email => email !== user.email));
+        })
+        .catch(error => {
+          console.error(`Error blocking user ${user.name}:`, error);
+        });
+    });
+  };
+
+  // Function to unblock selected users by email
+  const handleUnblock = () => {
+    const usersToUnblock = users.filter(user => selectedUsers.includes(user.email));
+
+    usersToUnblock.forEach(user => {
+      fetch(`http://localhost:5000/users/unblock/${user.email}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: 'Not-blocked' })  // Update status to Not-blocked
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(`User ${user.name} unblocked successfully.`);
+          setUsers(prevUsers => 
+            prevUsers.map(u => u.email === user.email ? { ...u, status: 'Not-blocked' } : u)
+          );
+          setSelectedUsers(prevSelected => prevSelected.filter(email => email !== user.email));
+        })
+        .catch(error => {
+          console.error(`Error unblocking user ${user.name}:`, error);
+        });
+    });
+  };
+
   // Function to delete selected users by email
   const handleDelete = () => {
     
@@ -128,8 +184,8 @@ const UserManagement = () => {
 
       {/* Toolbar with action buttons */}
       <div className="mb-3">
-        <Button variant="danger">Block</Button>{' '}
-        <Button variant="outline-success"><FaUnlock /></Button>{' '}
+        <Button variant="danger" onClick={handleBlock}>Block</Button>{' '}
+        <Button variant="outline-success" onClick={handleUnblock}><FaUnlock /></Button>{' '}
         <Button variant="outline-dark" onClick={handleDelete}><FaTrashAlt /></Button>
       </div>
 
